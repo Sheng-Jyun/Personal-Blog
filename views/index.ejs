@@ -1,0 +1,86 @@
+<%- include("partials/header.ejs") %>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>My Blog</h1>
+    </header>
+  </div>
+
+  <div class="card-row-wrapper">
+    <div class="card-row">
+      <!-- New Post Form -->
+      <div class="post">
+        <form action="/submit" method="POST">
+          <label for="title">Title:</label>
+          <input type="text" id="title" name="title" required>
+
+          <label for="content">Content:</label>
+          <textarea id="content" name="content" rows="6" maxlength="900" required></textarea>
+          <div id="char-count">900 characters left</div>
+
+          <label for="author">Author:</label>
+          <input type="text" id="author" name="author" required>
+
+          <button type="submit">Post</button>
+        </form>
+      </div>
+
+      <!-- Blog Posts -->
+      <% if (locals.posts) { %>
+        <% for (let i = posts.length - 1; i >= 0; i--)  { %>
+          <div class="post" id="post-<%= posts[i].id %>">
+            <h2><%= posts[i].title %></h2>
+            <h3 class="author"><%= posts[i].author %></h3>
+            <p contenteditable="false"><%= posts[i].content %></p>
+
+            <div class="actions">
+              <button class="edit" onclick="enableEdit(<%= posts[i].id %>)">Edit</button>
+              <form action="/delete/<%= posts[i].id %>" method="POST" style="display:inline;">
+              <button>Delete</button>
+              </form>
+            </div>
+          </div>
+        <% }; %>
+      <% } else { %>
+        <p>No posts yet. Start writing above!</p>
+      <% } %>
+    </div>
+  </div>
+
+  <script>
+    const textarea = document.getElementById("content");
+    const charCount = document.getElementById("char-count");
+
+    textarea.addEventListener("input", () => {
+      const remaining = 900 - textarea.value.length;
+      charCount.textContent = `${remaining} characters left`;
+    });
+
+  function enableEdit(id) {
+    const post = document.getElementById(`post-${id}`);
+    const content = post.querySelector("p");
+    const editBtn = post.querySelector(".edit");
+
+    if (editBtn.textContent === "Edit") {
+      content.contentEditable = true;
+      content.focus();
+      editBtn.textContent = "Save";
+    } else {
+      fetch(`/edit/${id}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          content: content.textContent
+        })
+      }).then(() => {
+        content.contentEditable = false;
+        editBtn.textContent = "Edit";
+      });
+    }
+  }
+  </script>
+  <!-- Optional Footer -->
+  <%- include("partials/footer.ejs") %>
+</body>
+
