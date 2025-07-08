@@ -1,6 +1,6 @@
 # 📝 Personal Blog
 
-**My Blog** is a full-stack blogging web application built with **Node.js**, **Express**, **EJS**, and **modular CSS**. It allows users to create, edit, and delete blog posts dynamically — all without a database. Posts are temporarily stored in memory and reset each time the server restarts.
+**Personal Blog** is a full-stack blogging web application built with **Node.js**, **Express**, **EJS**, and **modular CSS**. It allows users to create, edit, and delete blog posts dynamically — all without a database. Posts are temporarily stored in memory and reset each time the server restarts.
 
 ---
 
@@ -42,6 +42,12 @@
 
 ---
 
+## 🖼️ Preview
+
+![Demo Animation](./demo.gif)
+
+---
+
 ## 🛠 Tech Stack
 
 - **Node.js** – JavaScript runtime
@@ -56,8 +62,8 @@
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/Capstone2_Blog.git
-   cd Capstone2_Blog
+   git clone https://github.com/yourusername/Personal-Blog.git
+   cd Personal-Blog
    ```
 
 2. **Install dependencies**
